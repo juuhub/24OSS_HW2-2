@@ -55,7 +55,7 @@
       isValid = false;
     } else {
       for(let i = 0; i < name.length; i++){
-        if(!((name[i] >= 'A' && name[i] <= 'Z') || (name[i] >= 'a' && name[i] <= 'z'))){
+        if(!((position[i] >= 'A' && position[i] <= 'Z') || (position[i] >= 'a' && position[i] <= 'z') || position[i]==" ")){
           document.getElementById("name-error").textContent = 'Name should include only English characters!';
           isValid = false;
           validName = false;
@@ -84,7 +84,7 @@
       isValid = false;
     } else {
       for(let i = 0; i < position.length; i++){
-        if(!((position[i] >= 'A' && position[i] <= 'Z') || (position[i] >= 'a' && position[i] <= 'z'))){
+        if(!((position[i] >= 'A' && position[i] <= 'Z') || (position[i] >= 'a' && position[i] <= 'z') || position[i]==" ")){
           document.getElementById("position-error").textContent = 'Position should include only English characters!';
           isValid = false;
           break;
@@ -127,7 +127,7 @@
     }
 
     if(isValid == true){
-      alert('게시물이 추가됩니다');
+      alert('관심 선수에 추가됩니다');
     }
 
     return isValid;
