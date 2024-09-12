@@ -55,7 +55,7 @@
     } else {
       for(let i = 0; i < name.length; i++){
         if(!((position[i] >= 'A' && position[i] <= 'Z') || (position[i] >= 'a' && position[i] <= 'z') || position[i]==" ")){
-          document.getElementById("name-error").textContent = 'Name should include only English characters!';
+          document.getElementById("name-error").textContent = 'Name should include only English characters and space!';
           isValid = false;
           validName = false;
           break;
@@ -84,7 +84,7 @@
     } else {
       for(let i = 0; i < position.length; i++){
         if(!((position[i] >= 'A' && position[i] <= 'Z') || (position[i] >= 'a' && position[i] <= 'z') || position[i]==" ")){
-          document.getElementById("position-error").textContent = 'Position should include only English characters!';
+          document.getElementById("position-error").textContent = 'Position should include only English characters and space!';
           isValid = false;
           break;
         }
