@@ -54,7 +54,7 @@
     };
 
     const xhr = new XMLHttpRequest();
-    xhr.open("POST", "/data.json");
+    xhr.open("POST", "http://localhost:3000/players");
     xhr.setRequestHeader("content-type", "application/json;charset=UTF-8");
 
     xhr.send(JSON.stringify(data));
@@ -74,7 +74,7 @@
 
   function updateData(id) {
     const xhr = new XMLHttpRequest();
-    xhr.open("PUT", "/data.json" + id);
+    xhr.open("PUT", "http://localhost:3000/players/" + id);
     xhr.setRequestHeader("content-type", "application/json;charset=UTF-8");
 
     const data = {name: "Lee", age: 22, goal: 3, assist: 0};
@@ -94,7 +94,7 @@
 
   function deleteData(id){
     const xhr = new XMLHttpRequest();
-    xhr.open("DELETE", "/data.json" + id);
+    xhr.open("DELETE", "http://localhost:3000/players/" + id);
     xhr.setRequestHeader("content-type", "application/json;charset=UTF-8");
 
     xhr.onload = () => {
