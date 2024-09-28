@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Player Management</title>
+</head>
+<script>
+  window.onload = function(){
+    let btnStu = document.getElementById("btnStu");
+    let btnAdd = document.getElementById("btnAdd");
+    btnStu.addEventListener("click", getPlayers);
+    btnAdd.addEventListener("click", postData);
+  }
+
+  function getPlayers() {
+    let contents = document.getElementById("contents");
+    const xhr = new XMLHttpRequest();
+
+    xhr.open("GET", "http://localhost:3000/players");
+    xhr.setRequestHeader("content-type", "application/json");
+    xhr.send();
+
+    xhr.onload = () => {
+      if (xhr.status === 200) {
+        const res = JSON.parse(xhr.response);
+        contents.innerHTML = makeList(res);
+      } else {
+        console.log(xhr.status, xhr.statusText);
+      }
+    }
+  }
+
+  function makeList(data) {
+    let str = "<ul>";
+    for (let key in data) {
+      str += "<li>" + data[key].name + " (" + data[key].age + ") - " + data[key].goal + "/" + data[key].assist + "</li>";
+    }
+    str += "</ul>";
+    return str;
+  }
+
+  function postData() {
+    let name = document.getElementById("name");
+    let age = document.getElementById("age");
+    let goal = document.getElementById("goal");
+    let assist = document.getElementById("assist");
+
+    const data = {
+      name: name.value,
+      age: age.value,
+      goal: goal.value,
+      assist: assist.value
+    };
+
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", "http://localhost:3000/players");
+    xhr.setRequestHeader("content-type", "application/json;charset=UTF-8");
+
+    xhr.send(JSON.stringify(data));
+
+    xhr.onload = () => {
+      if (xhr.status === 201 || xhr.status === 200) {
+        name.value = "";
+        age.value = "";
+        goal.value = "";
+        assist.value = "";
+        getPlayers();
+      } else {
+        console.log(xhr.status, xhr.statusText);
+      }
+    }
+  }
+
+  function updateData(id) {
+    const xhr = new XMLHttpRequest();
+    xhr.open("PUT", "http://localhost:3000/players/" + id);
+    xhr.setRequestHeader("content-type", "application/json;charset=UTF-8");
+
+    const data = {name: "Lee", age: 22, goal: 3, assist: 0};
+
+    xhr.send(JSON.stringify(data));
+
+    xhr.onload = () => {
+      if (xhr.status === 200) {
+        const res = JSON.parse(xhr.response);
+        console.log(res);
+        getPlayers();
+      } else {
+        console.log(xhr.status, xhr.statusText);
+      }
+    }
+  }
+
+  function deleteData(id){
+    const xhr = new XMLHttpRequest();
+    xhr.open("DELETE", "http://localhost:3000/players/" + id);
+    xhr.setRequestHeader("content-type", "application/json;charset=UTF-8");
+
+    xhr.onload = () => {
+      if (xhr.status === 200) {
+        getPlayers();
+      } else {
+        console.log(xhr.status, xhr.statusText);
+      }
+    }
+    xhr.send();
+  }
+</script>
+
+<style>
+  .inputc {
+    width: 40px;
+    margin-right: 5px;
+  }
+</style>
+
+<body>
+  <button id="btnStu">선수데이터 가져오기</button><br><br>
+
+  <input class="inputc" type="text" id="name" placeholder="이름" required>
+  <input class="inputc" type="text" id="age" placeholder="나이" required>
+  <input class="inputc" type="text" id="goal" placeholder="골" required>
+  <input class="inputc" type="text" id="assist" placeholder="도움" required>
+  <button id="btnAdd">선수데이터 추가</button><br><br>
+
+  <button onclick="updateData(1)">1번 선수정보 수정</button>
+  <button onclick="deleteData(1)">1번 선수정보 삭제</button>
+
+  <div id="contents"></div>
+</body>
+</html>
